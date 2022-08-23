@@ -1,5 +1,11 @@
 import pg from "pg";
-import { DB_HOST, DB_NAME, DB_PASSWORD, DB_PORT, DB_USER } from "../constants";
+import {
+    DB_HOST,
+    DB_NAME,
+    DB_PASSWORD,
+    DB_PORT,
+    DB_USER,
+} from "../constants/index.js";
 
 const pool = new pg.Pool({
     user: DB_USER,

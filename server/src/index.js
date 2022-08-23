@@ -9,6 +9,8 @@ import authRouter from "./routes/auth.js";
 
 const app = Express();
 
+app.use(Express.json());
+
 app.use("/api", authRouter);
 
 const serve = () => {
