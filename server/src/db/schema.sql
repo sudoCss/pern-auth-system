@@ -15,5 +15,3 @@ CREATE TABLE users(
     password VARCHAR(512) NOT NULL,
     created_at DATE NOT NULL DEFAULT CURRENT_DATE,
 );
-
--- 

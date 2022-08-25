@@ -14,6 +14,6 @@ router.route("/login").post(loginValidation, validationMiddleware, login);
 
 router.route("/protected-info").get(userAuthMiddleware, protectedInfo);
 
-router.route("/logout").get(userAuthMiddleware, logout);
+router.route("/logout").get(logout);
 
 export default router;
