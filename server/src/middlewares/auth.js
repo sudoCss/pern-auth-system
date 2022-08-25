@@ -1,12 +1,5 @@
-import { validationResult } from "express-validator";
+import passport from "passport";
 
-export const validationMiddleware = (req, res, next) => {
-    const errors = validationResult(req);
+const userAuthMiddleware = passport.authenticate("jwt", { session: false });
 
-    if (!errors.isEmpty()) {
-        return res.status(400).json({
-            errors: errors.array(),
-        });
-    }
-    next();
-};
+export default userAuthMiddleware;
