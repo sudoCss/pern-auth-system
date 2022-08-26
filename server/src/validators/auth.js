@@ -18,18 +18,6 @@ const usernameAlreadyExists = check("username").custom(async (value) => {
     }
 });
 
-const email = check("email")
-    .isEmail()
-    .withMessage("Pleas provide a valid email");
-
-const emailAlreadyExists = check("email").custom(async (value) => {
-    const { rows } = await query("SELECT * FROM users WHERE email=$1", [value]);
-
-    if (rows.length) {
-        throw new Error("Email already exists.");
-    }
-});
-
 const password = check("password")
     .isLength({ min: 8, max: 64 })
     .withMessage("Password has to be 8-64 characters long.");
@@ -46,8 +34,6 @@ const confirmPassword = check("confirmPassword").custom(
 export const registerValidation = [
     username,
     usernameAlreadyExists,
-    email,
-    emailAlreadyExists,
     password,
     confirmPassword,
 ];

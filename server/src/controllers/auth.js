@@ -4,14 +4,14 @@ import { SECRET } from "../constants/index.js";
 import { query } from "../db/index.js";
 
 export const register = async (req, res) => {
-    const { username, email, password } = req.body;
+    const { username, password } = req.body;
 
     try {
         const hashedPassword = await Bcrypt.hash(password, 10);
 
         await query(
-            "INSERT INTO users(username, email, password) VALUES($1, $2, $3);",
-            [username, email, hashedPassword]
+            "INSERT INTO users(username, password) VALUES($1, $2, $3);",
+            [username, hashedPassword]
         );
 
         return res.status(201).json({
@@ -36,18 +36,17 @@ export const login = async (req, res) => {
     }
 };
 
-export const protectedInfo = async (req, res) => {
+export const dashboard = async (req, res) => {
     try {
         const authorized = req.cookies["jwt"];
         const jwtData = jwt.verify(authorized, SECRET);
-        const {
-            rows: [user],
-        } = await query("SELECT * FROM users WHERE id=$1", [jwtData.id]);
+        const { rows } = await query(
+            "SELECT id, username, created_at FROM users WHERE NOT id=$1",
+            [jwtData.id]
+        );
         res.status(200).json({
             success: true,
-            data: {
-                info: `Protected info, belongs to ${user.username}.\nEmail: ${user.email}.\nPassword: ${user.password}.`,
-            },
+            data: rows,
         });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });

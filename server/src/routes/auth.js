@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { login, logout, protectedInfo, register } from "../controllers/auth.js";
+import { dashboard, login, logout, register } from "../controllers/auth.js";
 import userAuthMiddleware from "../middlewares/auth.js";
 import { validationMiddleware } from "../middlewares/validation.js";
 import { loginValidation, registerValidation } from "../validators/auth.js";
@@ -12,7 +12,7 @@ router
 
 router.route("/login").post(loginValidation, validationMiddleware, login);
 
-router.route("/protected-info").get(userAuthMiddleware, protectedInfo);
+router.route("/dashboard").get(userAuthMiddleware, dashboard);
 
 router.route("/logout").get(logout);
 
