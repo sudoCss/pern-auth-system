@@ -3,11 +3,23 @@ import { createContext, useContext, useState } from "react";
 const authContext = createContext();
 const authUpdateContext = createContext();
 
-const Auth = ({ children }) => {
-    const [isAuth, setIsAuth] = useState(false);
+const getAuthStatusFromLocalStorage = () => {
+    const isAuth = localStorage.getItem("isAuth");
 
-    const auth = () => setIsAuth(true);
-    const unAuth = () => setIsAuth(false);
+    return isAuth && JSON.parse(isAuth) === true;
+};
+
+const Auth = ({ children }) => {
+    const [isAuth, setIsAuth] = useState(getAuthStatusFromLocalStorage());
+
+    const auth = () => {
+        setIsAuth(true);
+        localStorage.setItem("isAuth", "true");
+    };
+    const unAuth = () => {
+        setIsAuth(false);
+        localStorage.setItem("isAuth", "false");
+    };
 
     return (
         <>

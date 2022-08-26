@@ -3,11 +3,22 @@ import { createContext, useContext, useState } from "react";
 const themeContext = createContext();
 const themeUpdateContext = createContext();
 
-const Theme = ({ children }) => {
-    const [theme, setTheme] = useState("light");
+const getThemeStatusFromLocalStorage = () => {
+    const storedTheme = localStorage.getItem("theme");
 
-    const toggleTheme = () =>
-        setTheme((prev) => (prev === "light" ? "dark" : "light"));
+    return storedTheme || "light";
+};
+
+const Theme = ({ children }) => {
+    const [theme, setTheme] = useState(getThemeStatusFromLocalStorage());
+
+    const toggleTheme = () => {
+        setTheme((prev) => {
+            const newTheme = prev === "light" ? "dark" : "light";
+            localStorage.setItem("theme", newTheme);
+            return newTheme;
+        });
+    };
 
     return (
         <>

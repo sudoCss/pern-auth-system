@@ -1,5 +1,17 @@
+import { useEffect, useState } from "react";
+import { dashboard } from "../api/auth";
+
 const Dashboard = () => {
     const [users, setUsers] = useState([]);
+
+    useEffect(() => {
+        const fetchUsers = async () => {
+            const data = await dashboard();
+            setUsers(data.data);
+            console.log(data);
+        };
+        fetchUsers();
+    }, []);
 
     return (
         <div>
@@ -7,14 +19,10 @@ const Dashboard = () => {
             <ul>
                 {users.map((user) => (
                     <li key={user.id}>
-                        <h3>{user.username}</h3>
-                        <span>
-                            {user.username}clicked you {user.clicks} times.
-                        </span>
-                        <span>
-                            You clicked {user.username} {user.clicked} times.
-                        </span>
-                        <button>Click</button>
+                        <h3>
+                            {user.id} {user.username}
+                        </h3>
+                        <span>{user.created_at}</span>
                     </li>
                 ))}
             </ul>

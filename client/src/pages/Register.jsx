@@ -1,15 +1,34 @@
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { register } from "../api/auth";
 
 const Register = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+    const [error, setError] = useState({});
+    const [success, setSuccess] = useState({});
 
-    const handleSubmit = (e) => {
-        e.preventDefaults();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await register({
+                username,
+                password,
+                confirmPassword,
+            });
+
+            setUsername("");
+            setPassword("");
+            setConfirmPassword("");
+            setError({});
+            setSuccess(response);
+        } catch (error) {
+            setError(error);
+        }
     };
     return (
         <div>
@@ -57,8 +76,15 @@ const Register = () => {
                         onChange={(e) => setConfirmPassword(e.target.value)}
                     />
                 </div>
-                <input type="submit" value="Login" />
+                <input type="submit" value="Register" />
             </form>
+            <ul className="error">
+                {/* {error.map((error, index) => {
+                    <li key={index}>{error.msg}</li>;
+                })} */}
+            </ul>
+            <p className="success">{success.message}</p>
+            <p className="error">{error.message}</p>
             <p>
                 Already have an account? <Link to="/login">Login</Link>
             </p>

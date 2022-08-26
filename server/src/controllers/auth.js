@@ -9,12 +9,12 @@ export const register = async (req, res) => {
     try {
         const hashedPassword = await Bcrypt.hash(password, 10);
 
-        await query(
-            "INSERT INTO users(username, password) VALUES($1, $2, $3);",
-            [username, hashedPassword]
-        );
+        await query("INSERT INTO users(username, password) VALUES($1, $2);", [
+            username,
+            hashedPassword,
+        ]);
 
-        return res.status(201).json({
+        res.status(201).json({
             success: true,
             message: "User registered successfully.",
         });

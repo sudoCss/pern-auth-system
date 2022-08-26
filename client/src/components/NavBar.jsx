@@ -1,12 +1,27 @@
 import { FaMoon, FaSun } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import { useAuth } from "../contexts/Auth";
+import { Link, useNavigate } from "react-router-dom";
+import { logout } from "../api/auth";
+import { useAuth, useAuthUpdate } from "../contexts/Auth";
 import { useTheme, useThemeUpdate } from "../contexts/Theme";
 
 const NavBar = () => {
     const { isAuth } = useAuth();
     const { theme } = useTheme();
     const { toggleTheme } = useThemeUpdate();
+    const { unAuth } = useAuthUpdate();
+
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        try {
+            await logout();
+
+            unAuth();
+            navigate("/login");
+        } catch (error) {
+            console.log(error.response);
+        }
+    };
 
     return (
         <nav>
@@ -31,8 +46,9 @@ const NavBar = () => {
                                     <Link to={"/dashboard"}>Dashboard</Link>
                                 </li>
                                 <li>
-                                    {/* ??? */}
-                                    <Link to={"/logout"}>Logout</Link>
+                                    <button onClick={handleLogout}>
+                                        Logout
+                                    </button>
                                 </li>
                             </>
                         ) : (
