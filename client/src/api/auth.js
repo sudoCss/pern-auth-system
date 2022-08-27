@@ -1,21 +1,14 @@
+import axios from "axios";
 import { SERVER_URL } from "../constants";
 
-const fetchServer = async (route, method, data) =>
-    await fetch(`${SERVER_URL}/${route}`, {
-        method,
-        credentials: "include",
-        body: JSON.stringify(data),
-        headers: new Headers({
-            "Content-Type": "application/json",
-        }),
-    }).then((data) => data.json());
+axios.defaults.withCredentials = true;
 
 export const register = async (registerData) =>
-    await fetchServer("register", "POST", registerData);
+    await axios.post(`${SERVER_URL}/register`, registerData);
 
 export const login = async (loginData) =>
-    await fetchServer("login", "POST", loginData);
+    await axios.post(`${SERVER_URL}/login`, loginData);
 
-export const logout = async () => await fetchServer("logout", "GET");
+export const logout = async () => await axios.get(`${SERVER_URL}/logout`);
 
-export const dashboard = async () => await fetchServer("dashboard", "GET");
+export const dashboard = async () => await axios.get(`${SERVER_URL}/dashboard`);

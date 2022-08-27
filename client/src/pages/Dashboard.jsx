@@ -1,14 +1,24 @@
 import { useEffect, useState } from "react";
-import { dashboard } from "../api/auth";
+import { useNavigate } from "react-router-dom";
+import { dashboard, logout } from "../api/auth";
+import { useAuthUpdate } from "../contexts/Auth";
 
 const Dashboard = () => {
     const [users, setUsers] = useState([]);
 
+    const navigate = useNavigate();
+    const { unAuth } = useAuthUpdate();
+
     useEffect(() => {
         const fetchUsers = async () => {
-            const data = await dashboard();
-            setUsers(data.data);
-            console.log(data);
+            try {
+                const { data } = await dashboard();
+                setUsers(data.data);
+            } catch (error) {
+                logout();
+                unAuth();
+                navigate("/login");
+            }
         };
         fetchUsers();
     }, []);

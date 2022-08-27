@@ -29,7 +29,12 @@ export const login = async (req, res) => {
     try {
         const token = jwt.sign(payload, SECRET);
         res.status(200)
-            .cookie("jwt", token, { httpOnly: true, sameSite: "Lax" })
+            .cookie("jwt", token, {
+                httpOnly: true,
+                sameSite: "Lax",
+                secure: true,
+                maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+            })
             .json({ success: true, message: "Logged in successfully" });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
@@ -56,7 +61,11 @@ export const dashboard = async (req, res) => {
 export const logout = async (req, res) => {
     try {
         res.status(200)
-            .clearCookie("jwt", { httpOnly: true, sameSite: "Lax" })
+            .clearCookie("jwt", {
+                httpOnly: true,
+                sameSite: "Lax",
+                secure: true,
+            })
             .json({ success: true, message: "Logged out successfully" });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });

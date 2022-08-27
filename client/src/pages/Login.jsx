@@ -8,8 +8,8 @@ const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-    const [error, setError] = useState({});
-    const [success, setSuccess] = useState({});
+    const [errors, setErrors] = useState([]);
+    const [success, setSuccess] = useState("");
 
     const navigate = useNavigate();
     const { auth } = useAuthUpdate();
@@ -17,26 +17,21 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await login({
+            await login({
                 username,
                 password,
             });
 
-            if (response.errors) {
-                const error = new Error();
-                error.response = response;
-                throw error;
-            }
-
             setUsername("");
             setPassword("");
-            setError({});
-            setSuccess(response);
+            setErrors([]);
 
             auth();
             navigate("/dashboard");
         } catch (error) {
-            setError(error);
+            console.log(error);
+            setErrors(error.response.data.errors);
+            setSuccess("");
         }
     };
     return (
@@ -79,11 +74,10 @@ const Login = () => {
             </form>
             <ul className="errors">
                 {errors.map((error, index) => {
-                    <li key={index}>{error.msg}</li>;
+                    return <li key={index}>{error.msg}</li>;
                 })}
             </ul>
-            <p className="success">{success.message}</p>
-            <p className="error">{error.message}</p>
+            <p className="success">{success}</p>
             <p>
                 Don't have account yet? <Link to="/register">Register</Link>
             </p>

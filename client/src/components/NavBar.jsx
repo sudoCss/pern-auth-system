@@ -15,7 +15,6 @@ const NavBar = () => {
     const handleLogout = async () => {
         try {
             await logout();
-
             unAuth();
             navigate("/login");
         } catch (error) {

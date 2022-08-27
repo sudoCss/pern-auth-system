@@ -1,21 +1,25 @@
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import { register } from "../api/auth";
+import { Link, useNavigate } from "react-router-dom";
+import { login, register } from "../api/auth";
+import { useAuthUpdate } from "../contexts/Auth";
 
 const Register = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-    const [error, setError] = useState({});
-    const [success, setSuccess] = useState({});
+    const [errors, setErrors] = useState([]);
+    const [success, setSuccess] = useState("");
+
+    const navigate = useNavigate();
+    const { auth } = useAuthUpdate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            const response = await register({
+            const registerResponse = await register({
                 username,
                 password,
                 confirmPassword,
@@ -24,10 +28,22 @@ const Register = () => {
             setUsername("");
             setPassword("");
             setConfirmPassword("");
-            setError({});
-            setSuccess(response);
+            setErrors([]);
+            setSuccess(registerResponse.message);
+
+            const loginResponse = await login({
+                username,
+                password,
+            });
+
+            setSuccess(loginResponse.message);
+
+            auth();
+            navigate("/dashboard");
         } catch (error) {
-            setError(error);
+            console.log(error);
+            setErrors(error.response.data.errors);
+            setSuccess("");
         }
     };
     return (
@@ -79,12 +95,11 @@ const Register = () => {
                 <input type="submit" value="Register" />
             </form>
             <ul className="error">
-                {/* {error.map((error, index) => {
-                    <li key={index}>{error.msg}</li>;
-                })} */}
+                {errors.map((error, index) => {
+                    return <li key={index}>{error.msg}</li>;
+                })}
             </ul>
-            <p className="success">{success.message}</p>
-            <p className="error">{error.message}</p>
+            <p className="success">{success}</p>
             <p>
                 Already have an account? <Link to="/login">Login</Link>
             </p>
