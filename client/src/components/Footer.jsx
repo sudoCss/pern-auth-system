@@ -14,7 +14,7 @@ const Footer = () => {
     return (
         <footer>
             <hr />
-            <div className="container footer-content">
+            <section className="container footer-content">
                 <p>Made With ❤️, By Hamza Kalash AKA sudoCss. </p>
                 <ul className="links">
                     <li>
@@ -99,7 +99,7 @@ const Footer = () => {
                         </a>
                     </li>
                 </ul>
-            </div>
+            </section>
         </footer>
     );
 };

@@ -1,4 +1,4 @@
-import { FaMoon, FaSun } from "react-icons/fa";
+import { FaHome, FaMoon, FaSun } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../api/auth";
 import { useAuth, useAuthUpdate } from "../contexts/Auth";
@@ -24,8 +24,10 @@ const NavBar = () => {
 
     return (
         <nav>
-            <div className="container nav-links">
-                <Link to={"/"}>Home</Link>
+            <div className="nav-content">
+                <Link to={"/"}>
+                    <FaHome />
+                </Link>
                 <div>
                     <div className="theme">
                         <FaSun />
@@ -36,6 +38,7 @@ const NavBar = () => {
                             checked={theme === "dark"}
                             onChange={toggleTheme}
                         />
+                        <label htmlFor="toggle-theme"></label>
                         <FaMoon />
                     </div>
                     <ul>
