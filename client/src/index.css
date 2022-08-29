@@ -2,6 +2,7 @@
 *::before,
 *::after {
     box-sizing: border-box;
+    transition: 200ms;
 }
 
 body {
@@ -53,7 +54,7 @@ body {
 
 /* navbar */
 nav {
-    box-shadow: 0px 1px 15px 0px rgba(0, 0, 0, 0.6);
+    box-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.6);
 }
 
 nav .nav-content {
@@ -99,7 +100,6 @@ nav .nav-content .theme label::before {
     background-color: white;
     box-shadow: 0px 0px 15px 1px rgba(0, 0, 255, 0.6);
     border-radius: 50%;
-    transition: 200ms;
 }
 
 nav .nav-content .theme input:checked + label::before {
@@ -109,7 +109,7 @@ nav .nav-content .theme input:checked + label::before {
 
 nav .nav-content > div {
     display: flex;
-    justify-content: space-;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -117,6 +117,7 @@ nav .nav-content > div ul {
     display: flex;
     list-style: none;
     justify-content: space-between;
+    align-items: center;
     gap: 1rem;
 }
 
@@ -129,6 +130,7 @@ main {
     overflow-x: hidden;
 }
 
+/* general */
 h1 {
     font-size: 3.2em;
     line-height: 1.1;
@@ -169,13 +171,76 @@ input[type="submit"]:focus-visible {
     outline: 4px auto -webkit-focus-ring-color;
 }
 
+input[type="checkbox"].show-password {
+    display: none;
+}
+
+label.show-password {
+    cursor: pointer;
+}
+
+.home,
+.login,
+.register,
+.dashboard {
+    display: grid;
+    place-items: center;
+    padding: 1rem;
+}
+
+.login form,
+.register form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    width: 100%;
+    max-width: 380px;
+    border-radius: 20px;
+    box-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.6);
+}
+
+.login form > div,
+.register form > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.login form > div input,
+.register form > div input {
+    border-radius: 20px;
+    padding: 0.3rem;
+}
+
+.login form > div:last-of-type,
+.register form > div:last-of-type {
+    position: relative;
+}
+
+.login form > div:last-of-type span,
+.register form > div:last-of-type span {
+    position: absolute;
+    bottom: 0px;
+    right: 7px;
+    color: black;
+}
+
+.dashboard ul {
+    padding: 0;
+    list-style: none;
+}
+
+.dashboard ul li {
+    padding: 1rem;
+    margin: 0.6rem;
+    border-radius: 20px;
+    box-shadow: 0px 1px 15px 0px rgba(0, 0, 0, 0.6);
+}
+
 /* footer */
 footer {
     padding: 1rem 0.7rem;
-    /* position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0; */
 }
 
 .footer-content {

@@ -35,7 +35,7 @@ const Login = () => {
         }
     };
     return (
-        <div>
+        <div className="login">
             <h1>Login</h1>
             <form onSubmit={handleSubmit}>
                 <div>
@@ -58,10 +58,14 @@ const Login = () => {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                     <span>
-                        <label htmlFor="show-password">
+                        <label
+                            htmlFor="show-password"
+                            className="show-password"
+                        >
                             {showPassword ? <FaEye /> : <FaEyeSlash />}
                         </label>
                         <input
+                            className="show-password"
                             type="checkbox"
                             name="show-password"
                             id="show-password"
@@ -71,6 +75,9 @@ const Login = () => {
                     </span>
                 </div>
                 <input type="submit" value="Login" />
+                <p>
+                    Don't have account yet? <Link to="/register">Register</Link>
+                </p>
             </form>
             <ul className="errors">
                 {errors.map((error, index) => {
@@ -78,9 +85,6 @@ const Login = () => {
                 })}
             </ul>
             <p className="success">{success}</p>
-            <p>
-                Don't have account yet? <Link to="/register">Register</Link>
-            </p>
         </div>
     );
 };

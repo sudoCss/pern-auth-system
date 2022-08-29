@@ -24,7 +24,7 @@ const Dashboard = () => {
     }, []);
 
     return (
-        <div>
+        <div className="dashboard">
             <h1>Dashboard</h1>
             <ul>
                 {users.map((user) => (

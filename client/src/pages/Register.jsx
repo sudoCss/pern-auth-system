@@ -47,7 +47,7 @@ const Register = () => {
         }
     };
     return (
-        <div>
+        <div className="register">
             <h1>Register</h1>
             <form onSubmit={handleSubmit}>
                 <div>
@@ -69,18 +69,6 @@ const Register = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    <span>
-                        <label htmlFor="show-password">
-                            {showPassword ? <FaEye /> : <FaEyeSlash />}
-                        </label>
-                        <input
-                            type="checkbox"
-                            name="show-password"
-                            id="show-password"
-                            checked={showPassword}
-                            onChange={() => setShowPassword((prev) => !prev)}
-                        />
-                    </span>
                 </div>
                 <div>
                     <label htmlFor="confirm-password">Confirm Password: </label>
@@ -91,8 +79,27 @@ const Register = () => {
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                     />
+                    <span>
+                        <label
+                            className="show-password"
+                            htmlFor="show-password"
+                        >
+                            {showPassword ? <FaEye /> : <FaEyeSlash />}
+                        </label>
+                        <input
+                            className="show-password"
+                            type="checkbox"
+                            name="show-password"
+                            id="show-password"
+                            checked={showPassword}
+                            onChange={() => setShowPassword((prev) => !prev)}
+                        />
+                    </span>
                 </div>
                 <input type="submit" value="Register" />
+                <p>
+                    Already have an account? <Link to="/login">Login</Link>
+                </p>
             </form>
             <ul className="error">
                 {errors.map((error, index) => {
@@ -100,9 +107,6 @@ const Register = () => {
                 })}
             </ul>
             <p className="success">{success}</p>
-            <p>
-                Already have an account? <Link to="/login">Login</Link>
-            </p>
         </div>
     );
 };
